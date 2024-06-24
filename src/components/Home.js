@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Typography, Container, Grid, Stack, Divider, IconButton, Paper, Stepper, Step, StepLabel, StepContent, Button } from '@mui/material';
 import { BsThreeDots, BsCart, BsCurrencyDollar, BsPeople } from 'react-icons/bs';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 
@@ -189,7 +189,7 @@ function Home() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container  style={{margin:'30px 0px'}}>
+      {/* <Grid container  style={{margin:'30px 0px'}}>
             <Grid item xs={6}>
               <Paper sx={{ padding: "20px" }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
@@ -240,7 +240,7 @@ function Home() {
                 </ResponsiveContainer>
               </Paper>
             </Grid>
-      </Grid>
+      </Grid> */}
     </Container>
   );
 }
