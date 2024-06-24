@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import AdminPanel from './components/AdminPanel';
+import Login from './components/Login';
+import { Routes, Route } from "react-router-dom";
+import AuthWrapper from './components/AuthWrapper';
+import AdminLandingPage from './components/AdminLandingPage';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        {/* Landing Page */}
+        <Route path="/" element={<AdminLandingPage />} />
+        {/* Admin Login */}
+        <Route path="/login" element={<Login />} />
+        {/* Protected Admin Panel */}
+        <Route path="/admin/*" element={
+          <AuthWrapper>
+            <AdminPanel />
+          </AuthWrapper>
+        } />
+      </Routes>
     </div>
   );
 }
