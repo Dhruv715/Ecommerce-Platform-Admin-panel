@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, CssBaseline, Container, Stack, Typography, Card, CardContent, FormControl, FormLabel, TextField, OutlinedInput, InputAdornment, IconButton, Checkbox, Button, Grid } from '@mui/material';
+import { Box, CssBaseline, Container, Stack, Typography, Card, CardContent, FormControl, FormLabel, TextField, OutlinedInput, InputAdornment, IconButton, Checkbox, Button, Grid, CircularProgress } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
     // Show/hide Password
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [values, setValues] = useState({
         email: '',
         password: '',
@@ -27,6 +28,7 @@ const Login = () => {
 
     const handleLogin = (event) => {
         event.preventDefault();
+        setLoading(true);
         axios
             .post("https://ecommerce-platform-kfby.onrender.com/Admin/Login", values)
             .then((response) => {
@@ -34,10 +36,12 @@ const Login = () => {
                 console.log(response);
                 navigate("/admin/");
                 localStorage.setItem("Token", response.data.token);
+                setLoading(false);
             })
             .catch((error) => {
                 // handle error
                 console.log(error);
+                setLoading(false);
             });
     };
 
@@ -122,8 +126,8 @@ const Login = () => {
                                                 Remember me
                                             </Typography>
                                         </Stack>
-                                        <Button type="submit" variant="contained" sx={{ textTransform: "capitalize", fontSize: "16px", backgroundColor: "#0d6efd" }}>
-                                            Login
+                                        <Button type="submit" variant="contained" sx={{ textTransform: "capitalize", fontSize: "16px", backgroundColor: "#0d6efd" }} disabled={loading}>
+                                            {loading ? <CircularProgress size={24} /> : "Login"}
                                         </Button>
                                     </Stack>
                                 </form>
