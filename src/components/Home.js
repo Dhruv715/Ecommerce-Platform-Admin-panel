@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Typography, Container, Grid, Stack, Divider, IconButton, Paper, Stepper, Step, StepLabel, StepContent, Button } from '@mui/material';
+import { Box, Typography, Container, Grid, Stack, IconButton, Paper,ButtonBase } from '@mui/material';
 import { BsThreeDots, BsCart, BsCurrencyDollar, BsPeople } from 'react-icons/bs';
 // import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
+import { useNavigate } from 'react-router-dom';
 
 dayjs.extend(isoWeek);
 
@@ -12,7 +13,7 @@ function Home() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -63,23 +64,9 @@ function Home() {
 
   const { orders, sellers, users, products } = data;
 
-  const groupByDate = (orders, format) => {
-    return orders.reduce((acc, order) => {
-      const date = dayjs(order.date).format(format);
-      if (!acc[date]) acc[date] = 0;
-      acc[date] += order.quantity;
-      return acc;
-    }, {});
-  };
 
-  const dailyOrders = groupByDate(orders, 'YYYY-MM-DD');
-  const monthlyOrders = groupByDate(orders, 'YYYY-MM');
 
-  const formatChartData = (data) => Object.keys(data).map(key => ({ name: key, count: data[key] }));
 
-  const dailyOrderCounts = formatChartData(dailyOrders);
-  
-  const monthlyOrderCounts = formatChartData(monthlyOrders);
 
   return (
     <Container>
@@ -87,7 +74,8 @@ function Home() {
         <Grid item md={12} xs={12}>
           <Grid container spacing={3}>
             <Grid item sm={6} xs={12}>
-              <Paper sx={{ padding: "20px" }}>
+            <ButtonBase onClick={() => navigate('/admin/order')} sx={{ width: '100%' }}>
+            <Paper sx={{ padding: '20px', width: '100%' }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" marginBottom="15px">
                   <Box display="flex" alignItems="center">
                     <Typography variant="h6" gutterBottom color="#000">Total Order</Typography>
@@ -110,9 +98,11 @@ function Home() {
                   </Box>
                 </Stack>
               </Paper>
+              </ButtonBase>
             </Grid>
             <Grid item sm={6} xs={12}>
-              <Paper sx={{ padding: "20px" }}>
+            <ButtonBase onClick={() => navigate('/admin/seller')} sx={{ width: '100%' }}>
+            <Paper sx={{ padding: '20px', width: '100%' }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" marginBottom="15px">
                   <Box display="flex" alignItems="center">
                     <Typography variant="h6" gutterBottom color="#000">Total Sellers</Typography>
@@ -135,9 +125,11 @@ function Home() {
                   </Box>
                 </Stack>
               </Paper>
+              </ButtonBase>
             </Grid>
             <Grid item sm={6} xs={12}>
-              <Paper sx={{ padding: "20px" }}>
+            <ButtonBase onClick={() => navigate('/admin/user')} sx={{ width: '100%' }}>
+            <Paper sx={{ padding: '20px', width: '100%' }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" marginBottom="15px">
                   <Box display="flex" alignItems="center">
                     <Typography variant="h6" gutterBottom color="#000">Total User</Typography>
@@ -160,13 +152,14 @@ function Home() {
                   </Box>
                 </Stack>
               </Paper>
+              </ButtonBase>
             </Grid>
             <Grid item sm={6} xs={12}>
-              <Paper sx={{ padding: "20px" }}>
+            <ButtonBase onClick={() => navigate('/admin/product')} sx={{ width: '100%' }}>
+            <Paper sx={{ padding: '20px', width: '100%' }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" marginBottom="15px">
                   <Box display="flex" alignItems="center">
                     <Typography variant="h6" gutterBottom color="#000">Total Product </Typography>
-                    
                   </Box>
                   <IconButton size='small'><BsThreeDots /></IconButton>
                 </Stack>
@@ -185,62 +178,12 @@ function Home() {
                   </Box>
                 </Stack>
               </Paper>
+              </ButtonBase>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      {/* <Grid container  style={{margin:'30px 0px'}}>
-            <Grid item xs={6}>
-              <Paper sx={{ padding: "20px" }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                  <Box display="flex" alignItems="center">
-                    <Typography variant="h6" gutterBottom color="#000">Orders Reports</Typography>
-                    <Divider orientation="vertical" sx={{ height: "16px", width: "1.5px", backgroundColor: "#ababab", marginX: "5px" }} variant="middle" flexItem />
-                    <Typography variant="subtitle1" color="#ababab" gutterBottom>Today</Typography>
-                  </Box>
-                  <IconButton size='small'><BsThreeDots /></IconButton>
-                </Stack>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart
-                    data={dailyOrderCounts}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="count" stroke="#8884d8" activeDot={{ r: 8 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper sx={{ padding: "20px" }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                  <Box display="flex" alignItems="center">
-                    <Typography variant="h6" gutterBottom color="#000">Orders Report</Typography>
-                    <Divider orientation="vertical" sx={{ height: "16px", width: "1.5px", backgroundColor: "#ababab", marginX: "5px" }} variant="middle" flexItem />
-                    <Typography variant="subtitle1" color="#ababab" gutterBottom>Month</Typography>
-                  </Box>
-                  <IconButton size='small'><BsThreeDots /></IconButton>
-                </Stack>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart
-                    data={monthlyOrderCounts}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="count" stroke="#8884d8" activeDot={{ r: 8 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Paper>
-            </Grid>
-      </Grid> */}
+      
     </Container>
   );
 }

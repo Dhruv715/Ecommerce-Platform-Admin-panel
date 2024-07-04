@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -72,10 +73,40 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+const UserInfo = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginLeft: 'auto',
+  marginRight: theme.spacing(2),
+}));
+
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [adminData, setAdminData] = React.useState(null);
   const navigate = useNavigate();
+  
+  React.useEffect(() => {
+    const token = localStorage.getItem('Token');
+    const fetchAdminData = async () => {
+      try {
+        const response = await axios.get('https://ecommerce-platform-kfby.onrender.com/Admin/getData', {
+          headers: {
+            auth: token
+          }
+        });
+        if (response.data.status === 'Success') {
+          setAdminData(response.data.Data);
+        } else {
+          console.error('Failed to fetch admin data');
+        }
+      } catch (error) {
+        console.error('Error fetching admin data:', error);
+      }
+    };
+
+    fetchAdminData();
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,9 +135,21 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Admin Panel
           </Typography>
+          {adminData && (
+            <UserInfo>
+              <Box sx={{ mr: 1 }}>
+                <img
+                  src={`https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg`}
+                  alt="Admin"
+                  style={{ borderRadius: '50%', width: '30px', height: '30px' }}
+                />
+              </Box>
+              <Typography variant="body2">{adminData.Adminname}</Typography>
+            </UserInfo>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
