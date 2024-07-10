@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Typography, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem } from '@mui/material';
+import { Box, Typography, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, CircularProgress } from '@mui/material';
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -17,13 +17,7 @@ function ProductList() {
           }
         });
 
-        if (response.data.status === 'Success') {
-          const categoryMap = {};
-          response.data.categories.forEach(category => {
-            categoryMap[category._id] = category.name;
-          });
-          
-        } else {
+        if (response.data.status !== 'Success') {
           setError('Failed to fetch categories: ' + response.data.message);
         }
       } catch (err) {
@@ -85,7 +79,11 @@ function ProductList() {
   };
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (error) {
@@ -127,7 +125,6 @@ function ProductList() {
                   <TableCell>
                     {product.description.length > 100 ? `${product.description.substring(0, 100)}...` : product.description}
                   </TableCell>
-                
                   <TableCell>{product.status}</TableCell>
                   <TableCell>
                     <Select

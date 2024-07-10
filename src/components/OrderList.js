@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Typography, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Box, Typography, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from '@mui/material';
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -96,7 +96,11 @@ function OrderList() {
   }, []);
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (error) {

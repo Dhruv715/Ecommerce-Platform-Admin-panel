@@ -18,6 +18,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
+import WidgetsIcon from '@mui/icons-material/Widgets';
 import AddIcon from '@mui/icons-material/Add';
 import GroupIcon from '@mui/icons-material/Group';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -121,6 +122,10 @@ export default function PersistentDrawerLeft() {
     navigate('/login');
   };
 
+  const handleCloseDrawer = () => {
+    setOpen(false);
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -142,7 +147,7 @@ export default function PersistentDrawerLeft() {
             <UserInfo>
               <Box sx={{ mr: 1 }}>
                 <img
-                  src={`https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg`}
+                  src="https://www.svgrepo.com/download/13656/user.svg"
                   alt="Admin"
                   style={{ borderRadius: '50%', width: '30px', height: '30px' }}
                 />
@@ -173,7 +178,7 @@ export default function PersistentDrawerLeft() {
         <Divider />
         <List>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin">
+            <ListItemButton component={Link} to="/admin" onClick={handleCloseDrawer}>
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -181,15 +186,15 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin/category">
+            <ListItemButton component={Link} to="/admin/category" onClick={handleCloseDrawer}>
               <ListItemIcon>
-                <CategoryIcon />
+                <WidgetsIcon/>
               </ListItemIcon>
-              <ListItemText primary="Category" />
+              <ListItemText primary="Categories" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin/addcategory">
+            <ListItemButton component={Link} to="/admin/addcategory" onClick={handleCloseDrawer}>
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
@@ -197,15 +202,15 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin/subcategory">
+            <ListItemButton component={Link} to="/admin/subcategory" onClick={handleCloseDrawer}>
               <ListItemIcon>
                 <CategoryIcon />
               </ListItemIcon>
-              <ListItemText primary="Sub Category" />
+              <ListItemText primary="Sub Categories" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin/addsubcategory">
+            <ListItemButton component={Link} to="/admin/addsubcategory" onClick={handleCloseDrawer}>
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
@@ -213,7 +218,7 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin/seller">
+            <ListItemButton component={Link} to="/admin/seller" onClick={handleCloseDrawer}>
               <ListItemIcon>
                 <GroupIcon />
               </ListItemIcon>
@@ -221,7 +226,7 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin/user">
+            <ListItemButton component={Link} to="/admin/user" onClick={handleCloseDrawer}>
               <ListItemIcon>
                 <GroupIcon />
               </ListItemIcon>
@@ -229,7 +234,7 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin/product">
+            <ListItemButton component={Link} to="/admin/product" onClick={handleCloseDrawer}>
               <ListItemIcon>
                 <ShoppingCartIcon />
               </ListItemIcon>
@@ -237,7 +242,7 @@ export default function PersistentDrawerLeft() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/admin/order">
+            <ListItemButton component={Link} to="/admin/order" onClick={handleCloseDrawer}>
               <ListItemIcon>
                 <ReceiptIcon />
               </ListItemIcon>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Typography, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem } from '@mui/material';
+import { Box, Typography, Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, CircularProgress } from '@mui/material';
 
 function Sellers() {
   const [sellers, setSellers] = useState([]);
@@ -60,7 +60,11 @@ function Sellers() {
   };
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (error) {
